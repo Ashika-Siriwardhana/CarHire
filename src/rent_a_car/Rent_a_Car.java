@@ -4,6 +4,8 @@
  */
 package rent_a_car;
 
+import rent_a_car.view.LayoutView;
+
 /**
  *
  * @author user
@@ -16,6 +18,7 @@ public class Rent_a_Car {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.print("Hello");
+        new LayoutView().setVisible(true);
     }
     
 }
