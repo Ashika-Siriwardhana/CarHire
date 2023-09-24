@@ -4,17 +4,22 @@
  */
 package rent_a_car.view;
 
+import javax.swing.JOptionPane;
+import rent_a_car.controller.CustomerController;
+import rent_a_car.dto.CustomerDto;
+
 /**
  *
  * @author user
  */
 public class CustomerView extends javax.swing.JPanel {
 
-    /**
+    CustomerController customerController;/**
      * Creates new form Customer
      */
     public CustomerView() {
         initComponents();
+        customerController = new CustomerController();
     }
 
     /**
@@ -97,6 +102,11 @@ public class CustomerView extends javax.swing.JPanel {
 
         saveButton2.setBackground(new java.awt.Color(204, 255, 255));
         saveButton2.setText("SAVE");
+        saveButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
@@ -224,6 +234,10 @@ public class CustomerView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_updateButtonActionPerformed
 
+    private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
+        customerSave();// TODO add your handling code here:
+    }//GEN-LAST:event_saveButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bodyPanel;
@@ -246,4 +260,12 @@ public class CustomerView extends javax.swing.JPanel {
     private javax.swing.JPanel tablePanel;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
+
+    private void customerSave() {
+        CustomerDto customerDto=new CustomerDto(custIDTextField.getText(), custNameTextField.getText(), 
+                custNICTextField.getText(), custAddressTextField.getText(), custTPTextField.getText());
+        String result =customerController.saveCustomer(customerDto);
+        JOptionPane.showMessageDialog(this, result);
+        
+    }
 }

@@ -106,6 +106,11 @@ public class RentView extends javax.swing.JPanel {
 
         saveButton.setBackground(new java.awt.Color(204, 255, 255));
         saveButton.setText("SAVE");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         priceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         priceLabel.setText("Price per day");
@@ -305,6 +310,11 @@ public class RentView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_noReturnRadioButtonActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        rentSave();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel basePanel;
@@ -335,4 +345,8 @@ public class RentView extends javax.swing.JPanel {
     private javax.swing.JTextField yearTextField;
     private javax.swing.JRadioButton yesReturnRadioButton;
     // End of variables declaration//GEN-END:variables
+
+    private void rentSave() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
