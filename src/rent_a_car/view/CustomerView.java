@@ -266,6 +266,14 @@ public class CustomerView extends javax.swing.JPanel {
                 custNICTextField.getText(), custAddressTextField.getText(), custTPTextField.getText());
         String result =customerController.saveCustomer(customerDto);
         JOptionPane.showMessageDialog(this, result);
-        
+        clear();
+    }
+
+    private void clear() {
+        custIDTextField.setText("");
+        custNameTextField.setText("");
+        custNICTextField.setText("");
+        custAddressTextField.setText("");
+        custTPTextField.setText("");
     }
 }
