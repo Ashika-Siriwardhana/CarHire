@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="returnDeposit">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="returnCar">
+    </Component>
+  </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -16,25 +22,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="582" max="32767" attributes="0"/>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="basePanel" min="-2" pref="570" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="basePanel" min="-2" pref="570" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="407" max="32767" attributes="0"/>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
-                  <Component id="basePanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
-              </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <Component id="basePanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -46,12 +46,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="headerPanel" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="tablePanel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="bodyPanel" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="tablePanel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="bodyPanel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="headerPanel" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -100,6 +98,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="headerLabel">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="ff" red="ff" type="rgb"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Historic" size="14" style="1"/>
                 </Property>
@@ -120,57 +121,94 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="priceLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fromDateLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="rentIDLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="toDateLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="carNumberLabel" alignment="1" max="32767" attributes="0"/>
-                          <Component id="yearLabel" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="carNumberTextField" alignment="0" pref="131" max="32767" attributes="0"/>
-                                      <Component id="carModelTextField" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="yearTextField" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                                  <Component id="carBrandTextField" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="additionalChargesLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="fromDateLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="dayPriceLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="refundableDepositLabel" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="advancedPaymentLabel" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="toDateLabel1" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="priceLabel1" min="-2" pref="108" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="yesReturnRadioButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="noReturnRadioButton" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="additionalChargesTextField" min="-2" pref="133" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="priceLabel1" min="-2" pref="108" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="yesReturnCarRadioButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
+                                              <Component id="saveButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="updateButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                              <Component id="noReturnCarRadioButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="carBrandTextField1" min="-2" pref="131" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="carIDTextField" alignment="0" min="-2" pref="251" max="-2" attributes="0"/>
-                                      <Component id="priceTextField" alignment="0" min="-2" pref="133" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
-                                          <Component id="saveButton" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="updateButton" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="refundableDepositTextField" alignment="0" pref="131" max="32767" attributes="0"/>
+                                          <Component id="pricePerDayTextField" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="advancePaymentTextField" alignment="0" pref="131" max="32767" attributes="0"/>
+                                          <Component id="fromDateChooser" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="toDateLabel" min="-2" pref="108" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="toDateChooser" min="-2" pref="131" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="returnRefundableDepositLabel" min="-2" pref="108" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="yesReturnDepositRadioButton" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                                              <Component id="noReturnDepositRadioButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="totalLabel" min="-2" pref="108" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="totalTextField" min="-2" pref="131" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="balanceLabel" min="-2" pref="108" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="balanceTextField" min="-2" pref="131" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="rentIDLabel" min="-2" pref="69" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="rentIDTextField" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="carIDLabel" min="-2" pref="69" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="carIDTextField" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="custIDLabel" min="-2" pref="69" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="custIDTextField" min="-2" pref="93" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -180,37 +218,56 @@
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="rentIDLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="rentIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="carIDLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="carIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="custIDLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="custIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="toDateChooser" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="fromDateLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="toDateLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="fromDateChooser" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="fromDateLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="carBrandTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="toDateLabel1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="carBrandTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dayPriceLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="pricePerDayTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="totalLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="totalTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="toDateLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="carModelTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="priceLabel1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="yesReturnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="noReturnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="carNumberLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="carNumberTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="refundableDepositLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="refundableDepositTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="returnRefundableDepositLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="yesReturnDepositRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="noReturnDepositRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="yearLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="yearTextField" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="advancedPaymentLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="advancePaymentTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="balanceLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="balanceTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="priceLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="priceTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="noReturnCarRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="additionalChargesLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="additionalChargesTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="priceLabel1" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="yesReturnCarRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -240,7 +297,7 @@
                 <Property name="text" type="java.lang.String" value="Date From"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="toDateLabel">
+            <Component class="javax.swing.JLabel" name="dayPriceLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -248,7 +305,7 @@
                 <Property name="text" type="java.lang.String" value="Price per day"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="carNumberLabel">
+            <Component class="javax.swing.JLabel" name="refundableDepositLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -256,7 +313,7 @@
                 <Property name="text" type="java.lang.String" value="Refundable Deposit"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="yearLabel">
+            <Component class="javax.swing.JLabel" name="advancedPaymentLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -271,6 +328,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="DELETE"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="updateButton">
               <Properties>
@@ -294,27 +354,25 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="carIDTextField">
+            <Component class="javax.swing.JTextField" name="custIDTextField">
             </Component>
-            <Component class="javax.swing.JTextField" name="carBrandTextField">
+            <Component class="javax.swing.JTextField" name="pricePerDayTextField">
             </Component>
-            <Component class="javax.swing.JTextField" name="carModelTextField">
+            <Component class="javax.swing.JTextField" name="refundableDepositTextField">
             </Component>
-            <Component class="javax.swing.JTextField" name="carNumberTextField">
+            <Component class="javax.swing.JTextField" name="advancePaymentTextField">
             </Component>
-            <Component class="javax.swing.JTextField" name="yearTextField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="priceLabel">
+            <Component class="javax.swing.JLabel" name="additionalChargesLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Price per day"/>
+                <Property name="text" type="java.lang.String" value="Additional Charges"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="priceTextField">
+            <Component class="javax.swing.JTextField" name="additionalChargesTextField">
             </Component>
-            <Component class="javax.swing.JLabel" name="toDateLabel1">
+            <Component class="javax.swing.JLabel" name="toDateLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -322,31 +380,103 @@
                 <Property name="text" type="java.lang.String" value="Date To"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="carBrandTextField1">
-            </Component>
             <Component class="javax.swing.JLabel" name="priceLabel1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Is return"/>
+                <Property name="text" type="java.lang.String" value="Is Car Return"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="yesReturnRadioButton">
+            <Component class="javax.swing.JRadioButton" name="yesReturnCarRadioButton">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="returnCar"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Yes"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yesReturnRadioButtonActionPerformed"/>
-              </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="noReturnRadioButton">
+            <Component class="javax.swing.JRadioButton" name="noReturnDepositRadioButton">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="returnDeposit"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="No"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noReturnRadioButtonActionPerformed"/>
-              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="returnRefundableDepositLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Is  Deposit Return "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="totalLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Total"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="balanceLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Balance"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="yesReturnDepositRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="returnDeposit"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Yes"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="noReturnCarRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="returnCar"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="No"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="balanceTextField">
+            </Component>
+            <Component class="javax.swing.JTextField" name="totalTextField">
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="toDateChooser">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+              </Properties>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="fromDateChooser">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="custIDLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="cust ID"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="carIDLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Car ID"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="rentIDTextField">
+            </Component>
+            <Component class="javax.swing.JTextField" name="carIDTextField">
             </Component>
           </SubComponents>
         </Container>
@@ -363,7 +493,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="546" max="-2" attributes="0"/>
-                      <EmptySpace pref="10" max="32767" attributes="0"/>
+                      <EmptySpace pref="112" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -385,7 +515,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="rentTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="4">
@@ -396,6 +526,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rentTableMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

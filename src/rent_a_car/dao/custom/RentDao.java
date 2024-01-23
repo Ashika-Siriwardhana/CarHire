@@ -2,16 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package rent_a_car.service.customer;
+package rent_a_car.dao.custom;
 
-import rent_a_car.dto.CustomerDto;
-import rent_a_car.service.SuperService;
+import rent_a_car.dao.CrudDao;
+import rent_a_car.entity.RentEntity;
 
 /**
  *
  * @author user
  */
-public interface CustomerService extends SuperService{
-    String addCustomer(CustomerDto customerDto);
+public interface RentDao extends CrudDao<RentEntity, String>{
     
 }

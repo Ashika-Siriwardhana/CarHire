@@ -95,5 +95,11 @@ public class CustomerDto {
     public void setCustTPNo(String custTPNo) {
         this.custTPNo = custTPNo;
     }
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" + "custID=" + custID + ", custName=" + custName + ", custNIC=" + custNIC + ", custAddress=" + custAddress + ", custTPNo=" + custTPNo + '}';
+    }
+    
     
 }

@@ -4,6 +4,14 @@
  */
 package rent_a_car.view;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import rent_a_car.dto.CarDto;
+import rent_a_car.controller.CarController;
+
 /**
  *
  * @author user
@@ -13,8 +21,11 @@ public class CarView extends javax.swing.JPanel {
     /**
      * Creates new form Car
      */
+    CarController carController;
     public CarView() {
         initComponents();
+        carController = new CarController();
+        loadAllCars();
     }
 
     /**
@@ -33,7 +44,7 @@ public class CarView extends javax.swing.JPanel {
         carIDLabel = new javax.swing.JLabel();
         carBrandLabel = new javax.swing.JLabel();
         carModelLabel = new javax.swing.JLabel();
-        carNumberLabel = new javax.swing.JLabel();
+        fuelTypeLabel = new javax.swing.JLabel();
         yearLabel = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
@@ -41,13 +52,13 @@ public class CarView extends javax.swing.JPanel {
         carIDTextField = new javax.swing.JTextField();
         carBrandTextField = new javax.swing.JTextField();
         carModelTextField = new javax.swing.JTextField();
-        carNumberTextField = new javax.swing.JTextField();
+        fuelTypeTextField = new javax.swing.JTextField();
         yearTextField = new javax.swing.JTextField();
         priceLabel = new javax.swing.JLabel();
         priceTextField = new javax.swing.JTextField();
         tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        carTable = new javax.swing.JTable();
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 51));
 
@@ -81,14 +92,19 @@ public class CarView extends javax.swing.JPanel {
         carModelLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         carModelLabel.setText("Car Model");
 
-        carNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        carNumberLabel.setText("Car Number");
+        fuelTypeLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        fuelTypeLabel.setText("Fuel Type");
 
         yearLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         yearLabel.setText("Manufactured Year");
 
         deleteButton.setBackground(new java.awt.Color(204, 255, 255));
         deleteButton.setText("DELETE");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setBackground(new java.awt.Color(204, 255, 255));
         updateButton.setText("UPDATE");
@@ -100,6 +116,11 @@ public class CarView extends javax.swing.JPanel {
 
         saveButton.setBackground(new java.awt.Color(204, 255, 255));
         saveButton.setText("SAVE");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         priceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         priceLabel.setText("Price per day");
@@ -121,14 +142,14 @@ public class CarView extends javax.swing.JPanel {
                     .addComponent(carBrandLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(carIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(carModelLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                    .addComponent(carNumberLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(fuelTypeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                     .addComponent(yearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(carIDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                     .addComponent(carBrandTextField)
                     .addComponent(carModelTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                    .addComponent(carNumberTextField)
+                    .addComponent(fuelTypeTextField)
                     .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -155,8 +176,8 @@ public class CarView extends javax.swing.JPanel {
                     .addComponent(carModelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(carNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fuelTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fuelTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(yearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,7 +200,7 @@ public class CarView extends javax.swing.JPanel {
 
         tablePanel.setBackground(new java.awt.Color(0, 255, 204));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        carTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -190,7 +211,12 @@ public class CarView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        carTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                carTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(carTable);
 
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
@@ -253,9 +279,25 @@ public class CarView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        carUpdate();// TODO add your handling code here:
     }//GEN-LAST:event_updateButtonActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        try {
+            carSave();// TODO add your handling code here:
+        } catch (Exception ex) {
+            Logger.getLogger(CarView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        carDelete();// TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void carTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carTableMouseClicked
+        searchCar();// TODO add your handling code here:
+    }//GEN-LAST:event_carTableMouseClicked
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel basePanel;
@@ -266,13 +308,13 @@ public class CarView extends javax.swing.JPanel {
     private javax.swing.JTextField carIDTextField;
     private javax.swing.JLabel carModelLabel;
     private javax.swing.JTextField carModelTextField;
-    private javax.swing.JLabel carNumberLabel;
-    private javax.swing.JTextField carNumberTextField;
+    private javax.swing.JTable carTable;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel fuelTypeLabel;
+    private javax.swing.JTextField fuelTypeTextField;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel priceLabel;
     private javax.swing.JTextField priceTextField;
     private javax.swing.JButton saveButton;
@@ -281,4 +323,88 @@ public class CarView extends javax.swing.JPanel {
     private javax.swing.JLabel yearLabel;
     private javax.swing.JTextField yearTextField;
     // End of variables declaration//GEN-END:variables
+
+    private void carSave() throws Exception{
+        CarDto carDto = new CarDto(carIDTextField.getText(), carBrandTextField.getText(), 
+                carModelTextField.getText(), fuelTypeTextField.getText(),
+                Integer.parseInt(yearTextField.getText()) , Double.parseDouble(priceTextField.getText()));
+        String result=carController.saveCar(carDto);
+        JOptionPane.showMessageDialog(this, result);
+        clear();
+    }
+    private void clear() {
+        carIDTextField.setText("");
+        carBrandTextField.setText("");
+        carModelTextField.setText("");
+        fuelTypeTextField.setText("");
+        yearTextField.setText("");
+        priceTextField.setText("");
+    }
+    private void loadAllCars() {
+        try {
+            String[] collumns = {"Car Number", "Brand", "Model", "Fuel", "Year", "Rent Price"};
+            DefaultTableModel dtm = new DefaultTableModel(collumns, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            carTable.setModel(dtm);
+
+            ArrayList<CarDto> cars = carController.getAllCars();
+
+            for (CarDto car : cars) {
+                Object[] rowData = {car.getCarId(), car.getBrandName(),car.getModel(), car.getFuel(), car.getYear(), car.getPrice()};
+                dtm.addRow(rowData);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+
+    private void carUpdate() {
+        CarDto carDto = new CarDto(carIDTextField.getText(), carBrandTextField.getText(), 
+                carModelTextField.getText(), fuelTypeTextField.getText(),
+                Integer.parseInt(yearTextField.getText()) , Double.parseDouble(priceTextField.getText()));
+        
+        try {
+            String result = carController.updateCar(carDto);
+            JOptionPane.showMessageDialog(this, result);
+            clear();
+        } catch (Exception ex) {
+            Logger.getLogger(CarView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    private void carDelete() {
+        String result;
+        try {
+            result = carController.deleteCar(carIDTextField.getText());
+            JOptionPane.showMessageDialog(this, result);
+            clear();
+        } catch (Exception ex) {
+            Logger.getLogger(CarView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void searchCar(){
+        try {
+            String carId = carTable.getValueAt(carTable.getSelectedRow(), 0).toString();
+            CarDto carDto;
+            carDto = carController.searchCar(carId);
+            if (carDto != null) {
+                carIDTextField.setText(carDto.getCarId());
+                carBrandTextField.setText(carDto.getBrandName());
+                carModelTextField.setText(carDto.getModel());
+                fuelTypeTextField.setText(carDto.getFuel());
+                yearTextField.setText(Integer.toString(carDto.getYear()));
+                priceTextField.setText(String.valueOf(carDto.getPrice()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Customer Not Found");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CarView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

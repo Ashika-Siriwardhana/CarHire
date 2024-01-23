@@ -5,12 +5,12 @@
 package rent_a_car.dao.custom;
 
 import rent_a_car.dao.CrudDao;
-import rent_a_car.entity.CustomerEntity;
+import rent_a_car.entity.CarEntity;
 
 /**
  *
  * @author user
  */
-public interface CustomerDao extends CrudDao <CustomerEntity, String>{
-     
+public interface CarDao extends CrudDao<CarEntity, String>{
+    
 }

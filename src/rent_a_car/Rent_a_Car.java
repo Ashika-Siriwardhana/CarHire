@@ -17,7 +17,6 @@ public class Rent_a_Car {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.print("Hello");
         new LayoutView().setVisible(true);
     }
     

@@ -4,6 +4,12 @@
  */
 package rent_a_car.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
+
 /**
  *
  * @author user
@@ -13,8 +19,12 @@ public class LayoutView extends javax.swing.JFrame {
     /**
      * Creates new form Layout
      */
+    Timer liveTimer;
+    SimpleDateFormat sdf;
     public LayoutView() {
         initComponents();
+        liveDate();
+        liveTime();
     }
 
     /**
@@ -32,6 +42,11 @@ public class LayoutView extends javax.swing.JFrame {
         customerButton = new javax.swing.JButton();
         RentButton1 = new javax.swing.JButton();
         carButton = new javax.swing.JButton();
+        categoryButton = new javax.swing.JButton();
+        liveDateLabel = new javax.swing.JLabel();
+        liveTimeLabel = new javax.swing.JLabel();
+        liveDateTextField = new javax.swing.JTextField();
+        liveTimeTextField = new javax.swing.JTextField();
         bodyPanel = new javax.swing.JPanel();
         commandPanel = new javax.swing.JPanel();
 
@@ -39,6 +54,7 @@ public class LayoutView extends javax.swing.JFrame {
 
         headerPanel.setBackground(new java.awt.Color(255, 51, 51));
 
+        jLabel1.setBackground(new java.awt.Color(153, 255, 153));
         jLabel1.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Rent a Car");
@@ -89,28 +105,73 @@ public class LayoutView extends javax.swing.JFrame {
             }
         });
 
+        categoryButton.setBackground(new java.awt.Color(0, 255, 153));
+        categoryButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        categoryButton.setText("Category");
+        categoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryButtonActionPerformed(evt);
+            }
+        });
+
+        liveDateLabel.setBackground(new java.awt.Color(255, 255, 255));
+        liveDateLabel.setText("Date");
+
+        liveTimeLabel.setBackground(new java.awt.Color(255, 255, 255));
+        liveTimeLabel.setText("Time");
+
+        liveDateTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        liveDateTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                liveDateTextFieldActionPerformed(evt);
+            }
+        });
+
+        liveTimeTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout naviPanelLayout = new javax.swing.GroupLayout(naviPanel);
         naviPanel.setLayout(naviPanelLayout);
         naviPanelLayout.setHorizontalGroup(
             naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, naviPanelLayout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+            .addGroup(naviPanelLayout.createSequentialGroup()
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addGroup(naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(carButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RentButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(RentButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(categoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(33, 33, 33))
+            .addGroup(naviPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(liveDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(liveTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(liveTimeTextField)
+                    .addComponent(liveDateTextField))
+                .addContainerGap())
         );
         naviPanelLayout.setVerticalGroup(
             naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(naviPanelLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(38, 38, 38)
+                .addComponent(categoryButton)
+                .addGap(33, 33, 33)
                 .addComponent(customerButton)
-                .addGap(63, 63, 63)
+                .addGap(33, 33, 33)
                 .addComponent(carButton)
-                .addGap(71, 71, 71)
+                .addGap(33, 33, 33)
                 .addComponent(RentButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(liveDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(liveDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(naviPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(liveTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(liveTimeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(163, 163, 163))
         );
 
         bodyPanel.setBackground(new java.awt.Color(204, 51, 255));
@@ -132,7 +193,7 @@ public class LayoutView extends javax.swing.JFrame {
         commandPanel.setLayout(commandPanelLayout);
         commandPanelLayout.setHorizontalGroup(
             commandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 584, Short.MAX_VALUE)
+            .addGap(0, 571, Short.MAX_VALUE)
         );
         commandPanelLayout.setVerticalGroup(
             commandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +226,7 @@ public class LayoutView extends javax.swing.JFrame {
                         .addComponent(bodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(commandPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 22, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -183,6 +244,14 @@ public class LayoutView extends javax.swing.JFrame {
     private void RentButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RentButton1ActionPerformed
         loadRent();// TODO add your handling code here:
     }//GEN-LAST:event_RentButton1ActionPerformed
+
+    private void categoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryButtonActionPerformed
+        loadCategory();// TODO add your handling code here:
+    }//GEN-LAST:event_categoryButtonActionPerformed
+
+    private void liveDateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_liveDateTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_liveDateTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,10 +282,9 @@ public class LayoutView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LayoutView().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LayoutView().setVisible(true);
+            
         });
     }
 
@@ -224,10 +292,15 @@ public class LayoutView extends javax.swing.JFrame {
     private javax.swing.JButton RentButton1;
     private javax.swing.JPanel bodyPanel;
     private javax.swing.JButton carButton;
+    private javax.swing.JButton categoryButton;
     private javax.swing.JPanel commandPanel;
     private javax.swing.JButton customerButton;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel liveDateLabel;
+    private javax.swing.JTextField liveDateTextField;
+    private javax.swing.JLabel liveTimeLabel;
+    private javax.swing.JTextField liveTimeTextField;
     private javax.swing.JPanel naviPanel;
     // End of variables declaration//GEN-END:variables
 
@@ -256,5 +329,34 @@ public class LayoutView extends javax.swing.JFrame {
         bodyPanel.add(rentView);
         bodyPanel.repaint();
         bodyPanel.revalidate();
+    }
+
+    private void loadCategory() {
+        bodyPanel.removeAll();
+        Category category= new Category();
+        category.setSize(bodyPanel.getWidth(), bodyPanel.getHeight());
+        bodyPanel.add(category);
+        bodyPanel.repaint();
+        bodyPanel.revalidate();
+    }
+
+    private void liveDate() {
+        Date lDate= new Date();
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date =sdf.format(lDate);
+        liveDateTextField.setText(date);
+    }
+
+    private void liveTime() {
+        liveTimer = new Timer(0,new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date lDate= new Date();
+                sdf = new SimpleDateFormat("hh:mm:ss a");
+                String time = sdf.format(lDate);
+                liveTimeTextField.setText(time);
+            }
+        });
+        liveTimer.start();
     }
 }

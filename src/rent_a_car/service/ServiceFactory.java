@@ -4,7 +4,9 @@
  */
 package rent_a_car.service;
 
-import rent_a_car.service.customer.impl.CustomerServiceImpl;
+import rent_a_car.service.custom.impl.CarServiceImpl;
+import rent_a_car.service.custom.impl.CustomerServiceImpl;
+import rent_a_car.service.custom.impl.RentServiceImpl;
 
 /**
  *
@@ -24,12 +26,18 @@ public class ServiceFactory {
         switch (type){
             case CUSTOMER:
                 return new CustomerServiceImpl();
+            case CAR:
+                return new CarServiceImpl();
+            case RENT:
+                return new RentServiceImpl();
             default :
                 return null;
         }
     }
     public enum serviceType{
-        CUSTOMER
+        CUSTOMER,
+        CAR,
+        RENT
     }
     
     

@@ -4,7 +4,9 @@
  */
 package rent_a_car.dao;
 
+import rent_a_car.dao.custom.impl.CarDaoImpl;
 import rent_a_car.dao.custom.impl.CustomerDaoImpl;
+import rent_a_car.dao.custom.impl.RentDaoImpl;
 
 /**
  *
@@ -24,12 +26,16 @@ public class DaoFactory {
         switch (type){
             case CUSTOMER:
                 return new CustomerDaoImpl();
+            case CAR:
+                return new CarDaoImpl();
+            case RENT:
+                return new RentDaoImpl();
             default :
                 return null;
         }
     }
     
     public enum daoTypes{
-        CUSTOMER
+        CUSTOMER, CAR, RENT
     }
 }

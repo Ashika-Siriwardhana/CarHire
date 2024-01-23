@@ -129,7 +129,7 @@
                           <Component id="carBrandLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="carIDLabel" alignment="0" max="32767" attributes="0"/>
                           <Component id="carModelLabel" alignment="0" pref="108" max="32767" attributes="0"/>
-                          <Component id="carNumberLabel" alignment="1" pref="108" max="32767" attributes="0"/>
+                          <Component id="fuelTypeLabel" alignment="1" pref="108" max="32767" attributes="0"/>
                           <Component id="yearLabel" alignment="0" pref="108" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -137,7 +137,7 @@
                           <Component id="carIDTextField" alignment="0" pref="188" max="32767" attributes="0"/>
                           <Component id="carBrandTextField" alignment="0" max="32767" attributes="0"/>
                           <Component id="carModelTextField" alignment="0" pref="188" max="32767" attributes="0"/>
-                          <Component id="carNumberTextField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="fuelTypeTextField" alignment="0" max="32767" attributes="0"/>
                           <Component id="priceTextField" alignment="0" min="-2" pref="133" max="-2" attributes="0"/>
                           <Component id="yearTextField" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
                       </Group>
@@ -172,8 +172,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="carNumberLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="carNumberTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fuelTypeLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Component id="fuelTypeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -227,12 +227,12 @@
                 <Property name="text" type="java.lang.String" value="Car Model"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="carNumberLabel">
+            <Component class="javax.swing.JLabel" name="fuelTypeLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Car Number"/>
+                <Property name="text" type="java.lang.String" value="Fuel Type"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="yearLabel">
@@ -250,6 +250,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="DELETE"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="updateButton">
               <Properties>
@@ -269,6 +272,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="SAVE"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="carIDTextField">
             </Component>
@@ -276,7 +282,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="carModelTextField">
             </Component>
-            <Component class="javax.swing.JTextField" name="carNumberTextField">
+            <Component class="javax.swing.JTextField" name="fuelTypeTextField">
             </Component>
             <Component class="javax.swing.JTextField" name="yearTextField">
             </Component>
@@ -327,7 +333,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="carTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="4">
@@ -338,6 +344,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="carTableMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

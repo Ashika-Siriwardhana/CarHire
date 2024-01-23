@@ -4,17 +4,34 @@
  */
 package rent_a_car.view;
 
+import java.awt.HeadlessException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import rent_a_car.controller.RentController;
+import rent_a_car.dto.RentDto;
+
 /**
  *
  * @author user
  */
 public class RentView extends javax.swing.JPanel {
+    RentController rentController;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String depositReturn = null;
+    String carReturn= null;
 
     /**
      * Creates new form Rent
      */
     public RentView() {
         initComponents();
+        rentController = new RentController();
+        loadAllRent();
     }
 
     /**
@@ -26,36 +43,50 @@ public class RentView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        returnDeposit = new javax.swing.ButtonGroup();
+        returnCar = new javax.swing.ButtonGroup();
         basePanel = new javax.swing.JPanel();
         headerPanel = new javax.swing.JPanel();
         headerLabel = new javax.swing.JLabel();
         bodyPanel = new javax.swing.JPanel();
         rentIDLabel = new javax.swing.JLabel();
         fromDateLabel = new javax.swing.JLabel();
-        toDateLabel = new javax.swing.JLabel();
-        carNumberLabel = new javax.swing.JLabel();
-        yearLabel = new javax.swing.JLabel();
+        dayPriceLabel = new javax.swing.JLabel();
+        refundableDepositLabel = new javax.swing.JLabel();
+        advancedPaymentLabel = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        carIDTextField = new javax.swing.JTextField();
-        carBrandTextField = new javax.swing.JTextField();
-        carModelTextField = new javax.swing.JTextField();
-        carNumberTextField = new javax.swing.JTextField();
-        yearTextField = new javax.swing.JTextField();
-        priceLabel = new javax.swing.JLabel();
-        priceTextField = new javax.swing.JTextField();
-        toDateLabel1 = new javax.swing.JLabel();
-        carBrandTextField1 = new javax.swing.JTextField();
+        custIDTextField = new javax.swing.JTextField();
+        pricePerDayTextField = new javax.swing.JTextField();
+        refundableDepositTextField = new javax.swing.JTextField();
+        advancePaymentTextField = new javax.swing.JTextField();
+        additionalChargesLabel = new javax.swing.JLabel();
+        additionalChargesTextField = new javax.swing.JTextField();
+        toDateLabel = new javax.swing.JLabel();
         priceLabel1 = new javax.swing.JLabel();
-        yesReturnRadioButton = new javax.swing.JRadioButton();
-        noReturnRadioButton = new javax.swing.JRadioButton();
+        yesReturnCarRadioButton = new javax.swing.JRadioButton();
+        noReturnDepositRadioButton = new javax.swing.JRadioButton();
+        returnRefundableDepositLabel = new javax.swing.JLabel();
+        totalLabel = new javax.swing.JLabel();
+        balanceLabel = new javax.swing.JLabel();
+        yesReturnDepositRadioButton = new javax.swing.JRadioButton();
+        noReturnCarRadioButton = new javax.swing.JRadioButton();
+        balanceTextField = new javax.swing.JTextField();
+        totalTextField = new javax.swing.JTextField();
+        toDateChooser = new com.toedter.calendar.JDateChooser();
+        fromDateChooser = new com.toedter.calendar.JDateChooser();
+        custIDLabel = new javax.swing.JLabel();
+        carIDLabel = new javax.swing.JLabel();
+        rentIDTextField = new javax.swing.JTextField();
+        carIDTextField = new javax.swing.JTextField();
         tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        rentTable = new javax.swing.JTable();
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 51));
 
+        headerLabel.setBackground(new java.awt.Color(255, 255, 204));
         headerLabel.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         headerLabel.setText("Manage Rent");
 
@@ -84,17 +115,22 @@ public class RentView extends javax.swing.JPanel {
         fromDateLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         fromDateLabel.setText("Date From");
 
-        toDateLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        toDateLabel.setText("Price per day");
+        dayPriceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        dayPriceLabel.setText("Price per day");
 
-        carNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        carNumberLabel.setText("Refundable Deposit");
+        refundableDepositLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        refundableDepositLabel.setText("Refundable Deposit");
 
-        yearLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        yearLabel.setText("Advanced Payment");
+        advancedPaymentLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        advancedPaymentLabel.setText("Advanced Payment");
 
         deleteButton.setBackground(new java.awt.Color(204, 255, 255));
         deleteButton.setText("DELETE");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setBackground(new java.awt.Color(204, 255, 255));
         updateButton.setText("UPDATE");
@@ -112,28 +148,45 @@ public class RentView extends javax.swing.JPanel {
             }
         });
 
-        priceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        priceLabel.setText("Price per day");
+        additionalChargesLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        additionalChargesLabel.setText("Additional Charges");
 
-        toDateLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        toDateLabel1.setText("Date To");
+        toDateLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        toDateLabel.setText("Date To");
 
         priceLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        priceLabel1.setText("Is return");
+        priceLabel1.setText("Is Car Return");
 
-        yesReturnRadioButton.setText("Yes");
-        yesReturnRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yesReturnRadioButtonActionPerformed(evt);
-            }
-        });
+        returnCar.add(yesReturnCarRadioButton);
+        yesReturnCarRadioButton.setText("Yes");
 
-        noReturnRadioButton.setText("No");
-        noReturnRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                noReturnRadioButtonActionPerformed(evt);
-            }
-        });
+        returnDeposit.add(noReturnDepositRadioButton);
+        noReturnDepositRadioButton.setText("No");
+
+        returnRefundableDepositLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        returnRefundableDepositLabel.setText("Is  Deposit Return ");
+
+        totalLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        totalLabel.setText("Total");
+
+        balanceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        balanceLabel.setText("Balance");
+
+        returnDeposit.add(yesReturnDepositRadioButton);
+        yesReturnDepositRadioButton.setText("Yes");
+
+        returnCar.add(noReturnCarRadioButton);
+        noReturnCarRadioButton.setText("No");
+
+        toDateChooser.setDateFormatString("yyyy-MM-dd");
+
+        fromDateChooser.setDateFormatString("yyyy-MM-dd");
+
+        custIDLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        custIDLabel.setText("cust ID");
+
+        carIDLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        carIDLabel.setText("Car ID");
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
@@ -141,46 +194,75 @@ public class RentView extends javax.swing.JPanel {
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(priceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fromDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rentIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(toDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carNumberLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(yearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bodyPanelLayout.createSequentialGroup()
-                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(carNumberTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                .addComponent(carModelTextField, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carBrandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(additionalChargesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fromDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dayPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(refundableDepositLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(advancedPaymentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(toDateLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(bodyPanelLayout.createSequentialGroup()
-                                .addComponent(priceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bodyPanelLayout.createSequentialGroup()
+                                        .addComponent(additionalChargesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(priceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(yesReturnCarRadioButton))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bodyPanelLayout.createSequentialGroup()
+                                        .addGap(136, 136, 136)
+                                        .addComponent(saveButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(updateButton)))
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(deleteButton))
+                                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addComponent(noReturnCarRadioButton))))
+                            .addGroup(bodyPanelLayout.createSequentialGroup()
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(refundableDepositTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                    .addComponent(pricePerDayTextField)
+                                    .addComponent(advancePaymentTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                    .addComponent(fromDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addComponent(yesReturnRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(noReturnRadioButton)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                                        .addComponent(toDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(toDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                                        .addComponent(returnRefundableDepositLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(yesReturnDepositRadioButton)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(noReturnDepositRadioButton))
+                                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                                        .addComponent(balanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(balanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(bodyPanelLayout.createSequentialGroup()
-                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(carBrandTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(carIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(bodyPanelLayout.createSequentialGroup()
-                                    .addGap(136, 136, 136)
-                                    .addComponent(saveButton)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(updateButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(deleteButton))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(rentIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rentIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(carIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(custIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(custIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,32 +270,47 @@ public class RentView extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rentIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rentIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(carIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(carIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(custIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(custIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(toDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fromDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(toDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fromDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carBrandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toDateLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carBrandTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dayPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pricePerDayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carModelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(priceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yesReturnRadioButton)
-                    .addComponent(noReturnRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(carNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(refundableDepositLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(refundableDepositTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(returnRefundableDepositLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yesReturnDepositRadioButton)
+                    .addComponent(noReturnDepositRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(yearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(advancedPaymentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(advancePaymentTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(balanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(balanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(noReturnCarRadioButton)
+                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(additionalChargesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(additionalChargesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(priceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(yesReturnCarRadioButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteButton)
@@ -224,7 +321,7 @@ public class RentView extends javax.swing.JPanel {
 
         tablePanel.setBackground(new java.awt.Color(0, 255, 204));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        rentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -235,7 +332,12 @@ public class RentView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        rentTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rentTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(rentTable);
 
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
@@ -244,7 +346,7 @@ public class RentView extends javax.swing.JPanel {
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,11 +361,10 @@ public class RentView extends javax.swing.JPanel {
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(basePanelLayout.createSequentialGroup()
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tablePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bodyPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tablePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bodyPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         basePanelLayout.setVerticalGroup(
@@ -280,73 +381,229 @@ public class RentView extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 582, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(11, Short.MAX_VALUE)
-                    .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(11, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        rentUpdate();// TODO add your handling code here:
     }//GEN-LAST:event_updateButtonActionPerformed
-
-    private void yesReturnRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesReturnRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_yesReturnRadioButtonActionPerformed
-
-    private void noReturnRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noReturnRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_noReturnRadioButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         rentSave();
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        rentDelete();// TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void rentTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rentTableMouseClicked
+        searchRent();// TODO add your handling code here:
+    }//GEN-LAST:event_rentTableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel additionalChargesLabel;
+    private javax.swing.JTextField additionalChargesTextField;
+    private javax.swing.JTextField advancePaymentTextField;
+    private javax.swing.JLabel advancedPaymentLabel;
+    private javax.swing.JLabel balanceLabel;
+    private javax.swing.JTextField balanceTextField;
     private javax.swing.JPanel basePanel;
     private javax.swing.JPanel bodyPanel;
-    private javax.swing.JTextField carBrandTextField;
-    private javax.swing.JTextField carBrandTextField1;
+    private javax.swing.JLabel carIDLabel;
     private javax.swing.JTextField carIDTextField;
-    private javax.swing.JTextField carModelTextField;
-    private javax.swing.JLabel carNumberLabel;
-    private javax.swing.JTextField carNumberTextField;
+    private javax.swing.JLabel custIDLabel;
+    private javax.swing.JTextField custIDTextField;
+    private javax.swing.JLabel dayPriceLabel;
     private javax.swing.JButton deleteButton;
+    private com.toedter.calendar.JDateChooser fromDateChooser;
     private javax.swing.JLabel fromDateLabel;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JRadioButton noReturnRadioButton;
-    private javax.swing.JLabel priceLabel;
+    private javax.swing.JRadioButton noReturnCarRadioButton;
+    private javax.swing.JRadioButton noReturnDepositRadioButton;
     private javax.swing.JLabel priceLabel1;
-    private javax.swing.JTextField priceTextField;
+    private javax.swing.JTextField pricePerDayTextField;
+    private javax.swing.JLabel refundableDepositLabel;
+    private javax.swing.JTextField refundableDepositTextField;
     private javax.swing.JLabel rentIDLabel;
+    private javax.swing.JTextField rentIDTextField;
+    private javax.swing.JTable rentTable;
+    private javax.swing.ButtonGroup returnCar;
+    private javax.swing.ButtonGroup returnDeposit;
+    private javax.swing.JLabel returnRefundableDepositLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JPanel tablePanel;
+    private com.toedter.calendar.JDateChooser toDateChooser;
     private javax.swing.JLabel toDateLabel;
-    private javax.swing.JLabel toDateLabel1;
+    private javax.swing.JLabel totalLabel;
+    private javax.swing.JTextField totalTextField;
     private javax.swing.JButton updateButton;
-    private javax.swing.JLabel yearLabel;
-    private javax.swing.JTextField yearTextField;
-    private javax.swing.JRadioButton yesReturnRadioButton;
+    private javax.swing.JRadioButton yesReturnCarRadioButton;
+    private javax.swing.JRadioButton yesReturnDepositRadioButton;
     // End of variables declaration//GEN-END:variables
 
+    
     private void rentSave() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        returnCar();
+        returnDeposit();
+        try{
+            RentDto rentDto = new RentDto(Integer.valueOf(rentIDTextField.getText()),Integer.valueOf(carIDTextField.getText()), custIDTextField.getText(),sdf.format(fromDateChooser.getDate()), sdf.format(toDateChooser.getDate()),
+                    Double.valueOf(pricePerDayTextField.getText()), Double.valueOf(totalTextField.getText()),Double.valueOf(refundableDepositTextField.getText()), depositReturn,
+                    Double.valueOf(advancePaymentTextField.getText()), Double.valueOf(balanceTextField.getText()),Double.valueOf(additionalChargesTextField.getText()), carReturn);
+            
+            String result = rentController.saveRent(rentDto);
+            JOptionPane.showConfirmDialog(this, result);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Fill All blanks with suitable types or duplicate rentId");
+        }
+        clear();
     }
+
+    private void rentUpdate() {
+        returnCar();
+        returnDeposit();
+        try{
+            RentDto rentDto = new RentDto(Integer.valueOf(rentIDTextField.getText()),Integer.valueOf(carIDTextField.getText()), custIDTextField.getText(),sdf.format(fromDateChooser.getDate()), sdf.format(toDateChooser.getDate()),
+                    Double.valueOf(pricePerDayTextField.getText()), Double.valueOf(totalTextField.getText()),Double.valueOf(refundableDepositTextField.getText()), depositReturn,
+                    Double.valueOf(advancePaymentTextField.getText()), Double.valueOf(balanceTextField.getText()),Double.valueOf(additionalChargesTextField.getText()), carReturn);
+            
+            String result = rentController.updateRent(rentDto);
+            JOptionPane.showConfirmDialog(this, result);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Fill All blanks with suitable types");
+        }
+        clear();
+    }
+
+    private void rentDelete() {
+        try {
+            String rentId = rentIDTextField.getText();
+            String result = rentController.deleteRent(rentId);
+            JOptionPane.showConfirmDialog(this, result);
+            clear();
+        } catch (Exception ex) {
+            Logger.getLogger(RentView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void clear() {
+        rentIDTextField.setText("");
+        carIDTextField.setText("");
+        custIDTextField.setText("");
+        fromDateChooser.setCalendar(null); 
+        toDateChooser.setCalendar(null);
+        pricePerDayTextField.setText("");
+        totalTextField.setText("");
+        refundableDepositTextField.setText("");
+        yesReturnDepositRadioButton.setSelected(false);
+        noReturnDepositRadioButton.setSelected(false);
+        advancePaymentTextField.setText("");
+        balanceTextField.setText("");
+        additionalChargesTextField.setText("");
+        yesReturnCarRadioButton.setSelected(false);
+        noReturnCarRadioButton.setSelected(false);
+    }
+    
+    private void loadAllRent(){
+        try {
+            String[] collumns = {"Id", "From Date", "To Date","Total", "Refund", "Is Refund Return", "Advance", "Balance","Other Amount", "Is Car Return"};
+            DefaultTableModel dtm = new DefaultTableModel(collumns, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            rentTable.setModel(dtm);
+            
+            ArrayList<RentDto> rents = rentController.getAllRent(); 
+
+            for (RentDto rent : rents) {
+                Object[] rowData = {rent.getRentId(), rent.getFromDate(),rent.getToDate(),rent.getTotal(),rent.getRefundDeposit(),rent.getIsReturnRefundDeposit(),rent.getAdvanceAmount(),rent.getBalanceAmount(),rent.getAdditionalCharge(),rent.getIsReturnCar()};
+                dtm.addRow(rowData);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RentView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void searchRent(){
+        try {
+            String rentId =rentTable.getValueAt(rentTable.getSelectedRow(), 0).toString();
+            RentDto rentDto = rentController.searchRent(rentId);
+            if(rentDto != null){
+                rentIDTextField.setText(rentDto.getRentId().toString());
+                carIDTextField.setText(rentDto.getCarId().toString());
+                custIDTextField.setText(rentDto.getCustId());
+                fromDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(rentDto.getFromDate()));
+                toDateChooser.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(rentDto.getToDate()));
+                pricePerDayTextField.setText(rentDto.getDayPrice().toString());
+                totalTextField.setText(rentDto.getTotal().toString());
+                refundableDepositTextField.setText(rentDto.getRefundDeposit().toString());
+                yesReturnDepositRadioButton.setSelected(false);
+                noReturnDepositRadioButton.setSelected(false); 
+                advancePaymentTextField.setText(rentDto.getAdvanceAmount().toString());
+                balanceTextField.setText(rentDto.getBalanceAmount().toString());
+                additionalChargesTextField.setText(rentDto.getAdditionalCharge().toString());
+                yesReturnCarRadioButton.setSelected(false);
+                noReturnCarRadioButton.setSelected(false);
+                  
+                if("yes".equals(rentDto.getIsReturnRefundDeposit())){
+                    yesReturnDepositRadioButton.setSelected(true);
+                }
+                else {
+                    noReturnDepositRadioButton.setSelected(true);
+                }
+                if("yes".equals(rentDto.getIsReturnCar())){
+                    yesReturnCarRadioButton.setSelected(true);
+                }
+                else{
+                    noReturnCarRadioButton.setSelected(true);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Rent Not Found");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RentView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void returnCar() {
+        if(yesReturnCarRadioButton.isSelected()==true){
+            carReturn ="yes";
+        }
+        else if(noReturnCarRadioButton.isSelected()==true){
+            carReturn ="no";
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please select Is return car");
+        }
+    }
+
+    private void returnDeposit() {
+        if(yesReturnDepositRadioButton.isSelected()==true){
+            depositReturn ="yes";
+        }
+        else if(noReturnDepositRadioButton.isSelected()==true){
+            depositReturn ="no";
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please select Is return deposit");
+        }
+    }
+
+    
 }
